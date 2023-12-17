@@ -1,7 +1,7 @@
 TiroTinta = Tiro:extend()
 
 function TiroTinta:new(initX, initY, targetX, targetY)
-    TiroTinta.super.new(self, initX, initY, 3, 1, targetX, targetY)
+    TiroTinta.super.new(self, initX, initY, 3, 3, targetX, targetY)
     Color = {1, 1, 0}
 end
 
@@ -13,7 +13,7 @@ function TiroTinta:checkHitEnemy(enemies)
     -- inimigo.size = 20
     for i, inimigo in ipairs(enemies) do
         if self:hitEnemy(inimigo.x, inimigo.y, 20) then
-            inimigo:inkHit(Color, 10)
+            inimigo:inkHit(Color, 5)
             return true
         end
     end

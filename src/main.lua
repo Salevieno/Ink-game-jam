@@ -18,8 +18,8 @@ function love.load()
     TirosGerais = {}
     TirosTinta = {}
     Botoes = {Start = Botao(300, 250, "Começar jogo")}
-    Cur_respawn_time = 2
-    Num_fish_respawn = 2
+    Cur_respawn_time = 3
+    Num_fish_respawn = 1
     Current_dt = 0
     Score = 0
 end
