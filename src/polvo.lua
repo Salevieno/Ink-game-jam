@@ -1,15 +1,36 @@
 Polvo = Object:extend()
 
 function Polvo:new()
+    AmountInkShot = 10
+    MaxInkStored = 20
     self.image = love.graphics.newImage("/assets/temp/squid.png")
     self.x = love.graphics.getWidth()/2 - self.image:getWidth()/2
     self.y = love.graphics.getHeight()/2 - self.image:getHeight()/2
     self.speed = 100
     self.distLimit = 100
+    self.inkStorage = MaxInkStored
+    self.inkReloadTime = 0
+end
+
+function Polvo:hasInk()
+    return AmountInkShot <= self.inkStorage
+end
+
+function Polvo:reloadInk(dt)
+    self.inkReloadTime = self.inkReloadTime + 10 * dt
+    if 2 <= self.inkReloadTime and self.inkStorage <= MaxInkStored - 10 * dt then
+        self.inkStorage = self.inkStorage + 1
+        self.inkReloadTime = 0
+    end
 end
 
 function Polvo:shoot(mouseX, mouseY)
     table.insert(TirosAmigaveis, TiroAmigavel(self.x, self.y, mouseX, mouseY))
+end
+
+function Polvo:shootInk(mouseX, mouseY)
+    table.insert(TirosTinta, TiroTinta(self.x, self.y, mouseX, mouseY))
+    self.inkStorage = self.inkStorage - AmountInkShot
 end
 
 function Polvo:update(dt)
@@ -46,6 +67,14 @@ function Polvo:distanceToMid(x, y)
     return distance
 end
 
+function Polvo:drawInkStorage()
+    love.graphics.setColor(0, 0, 0)
+    love.graphics.rectangle('line', 740, 580, 20, -3 * MaxInkStored)
+    love.graphics.setColor(1, 1, 0)
+    love.graphics.rectangle('fill', 740, 580, 20, -3 * self.inkStorage)
+end
+
 function Polvo:draw()
+    love.graphics.setColor(1, 1, 1)
     love.graphics.draw(self.image, self.x, self.y, 0, 1, 1, self.image:getWidth()/2, self.image:getHeight()/2)
 end
