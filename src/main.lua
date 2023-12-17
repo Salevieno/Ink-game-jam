@@ -6,6 +6,7 @@ function love.load()
     require "Tiro"
     require "TiroAmigavel"
     require "TiroGeral"
+    require "TiroTinta"
     require "Botao"
     require "inimigo"
 
@@ -14,6 +15,7 @@ function love.load()
     Inim = Inimigo(200, 400)
     TirosAmigaveis = {}
     TirosGerais = {}
+    TirosTinta = {}
     Botoes = {Start = Botao(400, 300, "Começar jogo")}
 end
 
@@ -40,6 +42,14 @@ function love.update(dt)
         tiro:move()
         if tiro:isOffScreen() then
             table.remove(TirosGerais, i)
+        end
+    end
+
+    -- move tiros gerais
+    for i, tiro in ipairs(TirosTinta) do
+        tiro:move()
+        if tiro:isOffScreen() then
+            table.remove(TirosTinta, i)
         end
     end
 end
@@ -71,6 +81,9 @@ function love.mousepressed(x, y, button, istouch, presses)
         if button == 1 then
             Player:shoot(x, y)
         end
+        if button == 2 then
+            Player:shootInk(x, y)
+        end
     end
 end
 
@@ -96,6 +109,10 @@ function love.draw()
 
     for i = 1, #TirosGerais do
         TirosGerais[i]:draw()
+    end
+
+    for i = 1, #TirosTinta do
+        TirosTinta[i]:draw()
     end
     
 end

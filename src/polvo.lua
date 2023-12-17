@@ -12,6 +12,10 @@ function Polvo:shoot(mouseX, mouseY)
     table.insert(TirosAmigaveis, TiroAmigavel(self.x, self.y, mouseX, mouseY))
 end
 
+function Polvo:shootInk(mouseX, mouseY)
+    table.insert(TirosTinta, TiroTinta(self.x, self.y, mouseX, mouseY))
+end
+
 function Polvo:update(dt)
     local old_x, old_y = self.x, self.y
 
