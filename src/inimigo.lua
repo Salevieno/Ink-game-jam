@@ -72,13 +72,13 @@ function Inimigo:shootControled(x, y)
     return TiroAmigavel(self.x, self.y, x, y)
 end
 
-function Inimigo.SpawnNewEnemy(Player)
+function Inimigo.SpawnNewEnemy(Player, seed)
     local image = love.graphics.newImage("/assets/temp/enemy 64.png")
     local half_w, half_h = image:getWidth()/2, image:getHeight()/2
     local min_x, min_y = half_w, half_h
     local max_x, max_y = love.graphics.getWidth() - half_w, love.graphics.getHeight() - half_h
 
-    math.randomseed(os.time())
+    math.randomseed(os.time() + seed)
     local x, y
 
     repeat
