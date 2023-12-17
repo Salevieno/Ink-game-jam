@@ -34,7 +34,7 @@ function Polvo:shootInk(mouseX, mouseY)
     self.inkStorage = self.inkStorage - AmountInkShot
 end
 
-function Polvo:update(dt)
+function Polvo:move(dt)
     local old_x, old_y = self.x, self.y
 
     if love.keyboard.isDown("w") then
