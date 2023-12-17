@@ -3,6 +3,7 @@ function love.load()
     Object = require "classic"
     require "Tela"
     require "polvo"
+    require "Tiro"
     require "TiroAmigavel"
     require "TiroGeral"
     require "Botao"
