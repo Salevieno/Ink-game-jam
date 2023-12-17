@@ -18,26 +18,26 @@ function love.load()
     TirosGerais = {}
     TirosTinta = {}
     Botoes = {Start = Botao(400, 300, "Começar jogo")}
-    cur_respawn_time = 2
-    num_fish_respawn = 1
-    current_dt = 0
+    Cur_respawn_time = 2
+    Num_fish_respawn = 1
+    Current_dt = 0
 end
 
 function love.update(dt)
     -- ocorrem o tempo todo (a cada frame). dt -> intervalo de tempo
     if Tela.status == 'Jogo rodando' then
-        current_dt = current_dt + dt
+        Current_dt = Current_dt + dt
     
-        if current_dt >= cur_respawn_time then
-            current_dt = 0
-            if cur_respawn_time - 0.25 > 0 then
-                cur_respawn_time = cur_respawn_time - 0.25
+        if Current_dt >= Cur_respawn_time then
+            Current_dt = 0
+            if Cur_respawn_time - 0.25 > 0 then
+                Cur_respawn_time = Cur_respawn_time - 0.25
             else
-                cur_respawn_time = 2
-                num_fish_respawn = num_fish_respawn + 1
+                Cur_respawn_time = 2
+                Num_fish_respawn = Num_fish_respawn + 1
             end
 
-            for i=1, num_fish_respawn do
+            for i=1, Num_fish_respawn do
                 table.insert(Inimigos, Inimigo.SpawnNewEnemy(Player))
             end
 
