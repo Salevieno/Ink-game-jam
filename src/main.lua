@@ -21,8 +21,7 @@ function love.load()
     Cur_respawn_time = 2
     Num_fish_respawn = 2
     Current_dt = 0
-
-    
+    Score = 0
 end
 
 function love.update(dt)
@@ -63,6 +62,7 @@ function love.update(dt)
             end
             if tiro:checkHitEnemy(Inimigos, TirosAmigaveis) then
                 table.remove(TirosAmigaveis, i)
+                Score = Score + 10
             end
         end
     
@@ -129,6 +129,7 @@ end
 function love.draw()
     -- desenha na tela
     Tela:draw()
+    Tela:drawScore()
 
     for i, botao in pairs(Botoes) do
         botao:draw()
