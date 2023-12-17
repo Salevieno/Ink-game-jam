@@ -12,20 +12,43 @@ function love.load()
 
     Tela = Tela()
     Player = Polvo()
-    Inim = Inimigo(200, 400)
+    Inimigos = {} 
+    --Inim = Inimigo(200, 400)
     TirosAmigaveis = {}
     TirosGerais = {}
     TirosTinta = {}
     Botoes = {Start = Botao(400, 300, "Começar jogo")}
+    cur_respawn_time = 2
+    num_fish_respawn = 1
+    current_dt = 0
 end
 
 function love.update(dt)
     -- ocorrem o tempo todo (a cada frame). dt -> intervalo de tempo
     if Tela.status == 'Jogo rodando' then
+        current_dt = current_dt + dt
+    
+        if current_dt >= cur_respawn_time then
+            current_dt = 0
+            if cur_respawn_time - 0.25 > 0 then
+                cur_respawn_time = cur_respawn_time - 0.25
+            else
+                cur_respawn_time = 2
+                num_fish_respawn = num_fish_respawn + 1
+            end
+
+            for i=1, num_fish_respawn do
+                table.insert(Inimigos, Inimigo.SpawnNewEnemy(Player))
+            end
+
+        end
+
         Player:update(dt)
-        local possivelTiro = Inim:update(dt, Player)
-        if possivelTiro ~= nil then
-            table.insert(TirosGerais, possivelTiro)
+        for i, v in ipairs(Inimigos) do
+            local possivelTiro = v:update(dt, Player)
+            if possivelTiro ~= nil then
+                table.insert(TirosGerais, possivelTiro)
+            end
         end
     end
 
@@ -97,7 +120,9 @@ function love.draw()
     if Tela.status == 'Jogo rodando' or Tela.status == 'Jogo pausado' then
         Player:drawInkStorage()
         Player:draw()
-        Inim:draw()
+        for i, v in ipairs(Inimigos) do
+            v:draw()
+        end
     end
 
     for i = 1, #TirosAmigaveis do
@@ -111,5 +136,4 @@ function love.draw()
     for i = 1, #TirosTinta do
         TirosTinta[i]:draw()
     end
-    
 end

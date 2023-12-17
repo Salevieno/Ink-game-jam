@@ -7,10 +7,16 @@ function Inimigo:new(x, y)
     self.image = love.graphics.newImage("/assets/temp/enemy 64.png")
     self.y_limits = {self.y - 50, self.y + 100}
     self.dt_since_shoot = 0
+    self.color_arr = {1, 1, 1}
 end
 
 function Inimigo:draw()
+    love.graphics.setColor(self.color_arr[1], self.color_arr[2], self.color_arr[3])
     love.graphics.draw(self.image, self.x, self.y, 0, 1, 1, self.image:getWidth()/2, self.image:getHeight()/2)
+end
+
+function Inimigo:setColor(color_arr)
+    self.color_arr = color_arr
 end
 
 function Inimigo:update(dt, Player)
@@ -33,4 +39,19 @@ end
 
 function Inimigo:shoot(Player)
     return TiroGeral(self.x, self.y, Player.x, Player.y)
+end
+
+function Inimigo.SpawnNewEnemy(Player)
+    local image = love.graphics.newImage("/assets/temp/enemy 64.png")
+    local min_x, min_y = image:getWidth()/2, image:getHeight()/2
+    local max_x, max_y = love.graphics.getWidth() - image:getWidth()/2, love.graphics.getHeight() - image:getHeight()/2
+
+    math.randomseed(os.time())
+    local x, y
+
+    repeat
+        x, y = math.random(min_x, max_x), math.random(min_y, max_y)
+    until Player:distanceToMid(x, y) > Player.distLimit
+    
+    return Inimigo(x, y)
 end
