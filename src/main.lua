@@ -13,11 +13,10 @@ function love.load()
     Tela = Tela()
     Player = Polvo()
     Inimigos = {} 
-    --Inim = Inimigo(200, 400)
     TirosAmigaveis = {}
     TirosGerais = {}
     TirosTinta = {}
-    Botoes = {Start = Botao(400, 300, "Começar jogo")}
+    Botoes = {Start = Botao(300, 250, "Começar jogo")}
     Cur_respawn_time = 2
     Num_fish_respawn = 1
     Current_dt = 0
@@ -43,9 +42,9 @@ function love.update(dt)
 
         end
 
-        Player:update(dt)
-        for i, v in ipairs(Inimigos) do
-            local possivelTiro = v:update(dt, Player)
+        Player:move(dt)
+        for i, inimigo in ipairs(Inimigos) do
+            local possivelTiro = inimigo:update(dt, Player)
             if possivelTiro ~= nil then
                 table.insert(TirosGerais, possivelTiro)
             end
@@ -53,10 +52,13 @@ function love.update(dt)
 
         Player:reloadInk(dt)
     
-        -- remove tiros fora da tela
+        -- move tiros amigáveis
         for i, tiro in ipairs(TirosAmigaveis) do
             tiro:move()
             if tiro:isOffScreen() then
+                table.remove(TirosAmigaveis, i)
+            end
+            if tiro:checkHitEnemy(Inimigos, TirosAmigaveis) then
                 table.remove(TirosAmigaveis, i)
             end
         end
@@ -67,6 +69,7 @@ function love.update(dt)
             if tiro:hitPlayer(Player.x, Player.y, (Player.size.width + Player.size.height) / 2) then
                 -- Tela:gameOver()
             end
+
             if tiro:isOffScreen() then
                 table.remove(TirosGerais, i)
             end
@@ -80,7 +83,7 @@ function love.update(dt)
             end
         end
 
-
+        -- 
 
     end
 end
