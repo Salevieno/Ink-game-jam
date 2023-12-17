@@ -17,18 +17,20 @@ function Inimigo:update(dt, Player)
     self.dt_since_shoot = self.dt_since_shoot + dt
     self.y = self.y + self.speed*dt
 
-    if self.y < self.y_limits[1] or self.y > self.y_limits[2] then
-        self.speed = -self.speed
+    if self.y < self.y_limits[1] then
+        self.speed = 100
+    elseif self.y > self.y_limits[2] then
+        self.speed = -100
     end
 
     if self.dt_since_shoot >= 2 then
         self.dt_since_shoot = 0
-        return self:shoot()
+        return self:shoot(Player)
     end
 
     return nil
 end
 
-function Inimigo:shoot()
-    return TiroGeral()
+function Inimigo:shoot(Player)
+    return TiroGeral(self.x, self.y, Player.x, Player.y)
 end

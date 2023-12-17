@@ -21,7 +21,7 @@ function love.update(dt)
     -- ocorrem o tempo todo (a cada frame). dt -> intervalo de tempo
     if Tela.status == 'Jogo rodando' then
         Player:update(dt)
-        local possivelTiro = Inim:update(dt)
+        local possivelTiro = Inim:update(dt, Player)
         if possivelTiro ~= nil then
             table.insert(TirosGerais, possivelTiro)
         end
