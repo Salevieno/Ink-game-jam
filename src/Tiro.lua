@@ -37,5 +37,6 @@ function Tiro:move(target)
 end
 
 function Tiro:draw()
+    love.graphics.setColor(1, 1, 1)
     love.graphics.arc('fill', self.pos.x, self.pos.y, self.size, 0, 360)
 end

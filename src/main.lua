@@ -90,12 +90,10 @@ function love.draw()
         Inim:draw()
     end
 
-    love.graphics.setColor(0, 1, 0)
     for i = 1, #TirosAmigaveis do
         TirosAmigaveis[i]:draw()
     end
 
-    love.graphics.setColor(1, 0, 0)
     for i = 1, #TirosGerais do
         TirosGerais[i]:draw()
     end

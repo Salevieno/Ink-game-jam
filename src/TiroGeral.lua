@@ -5,5 +5,6 @@ function TiroGeral:new(x, y, targetX, targetY)
 end
 
 function TiroGeral:draw()
+    love.graphics.setColor(1, 0, 0)
     love.graphics.arc('fill', self.pos.x, self.pos.y, self.size, 0, 360)
 end
