@@ -108,6 +108,11 @@ function love.mousepressed(x, y, button, istouch, presses)
     if Tela.status == 'Jogo rodando' then
         if button == 1 then
             Player:shoot(x, y)
+            for i, inimigo in ipairs(Inimigos) do
+                if inimigo.controled then
+                    table.insert(TirosAmigaveis, inimigo:shootControled(x, y))
+                end
+            end
         end
         if button == 2 and Player:hasInk() then
             Player:shootInk(x, y)
