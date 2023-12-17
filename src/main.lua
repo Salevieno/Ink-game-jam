@@ -18,6 +18,7 @@ function love.update(dt)
     -- ocorrem o tempo todo (a cada frame). dt -> intervalo de tempo
     if Tela.status == 'Jogo rodando' then
         Player:update(dt)
+        Inim:update(dt)
     end
 
     for i, tiro in ipairs(TirosAmigaveis) do
