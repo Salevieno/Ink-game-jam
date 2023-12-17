@@ -5,11 +5,13 @@ function love.load()
     require "polvo"
     require "TiroAmigavel"
     require "TiroGeral"
+    require "Botao"
 
     Tela = Tela()
     Player = Polvo()
     TirosAmigaveis = {}
     TirosGerais = {}
+    Botoes = {Start = Botao(400, 300, "Começar jogo")}
 end
 
 function love.update(dt)
@@ -18,6 +20,7 @@ function love.update(dt)
         Player:update(dt)
     end
 
+    -- remove tiros fora da tela
     for i, tiro in ipairs(TirosAmigaveis) do
         tiro:move()
         if tiro:isOffScreen() then
@@ -46,6 +49,17 @@ function love.mousepressed(x, y, button, istouch, presses)
     if button == 2 then
         Tela:incScreen()
     end
+
+    -- botão start
+    if Botoes.Start ~= nil then
+        if Botoes.Start:isPressed(x, y) then
+            -- BotaoStart.act()
+            Tela:incScreen()
+            Botoes.Start = nil
+        end
+    end
+
+    -- player atira
     if Tela.status == 'Jogo rodando' then
         if button == 1 then
             Player:shoot(x, y)
@@ -57,7 +71,13 @@ function love.draw()
     -- desenha na tela
     love.graphics.setColor(1, 1, 1)
     Tela:draw()
-    
+
+    love.graphics.setColor(1, 1, 1)
+    for i, botao in pairs(Botoes) do
+        botao:draw()
+    end
+
+    love.graphics.setColor(1, 1, 1)
     if Tela.status == 'Jogo rodando' or Tela.status == 'Jogo pausado' then
         Player:draw()
     end
