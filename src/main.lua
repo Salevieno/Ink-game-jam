@@ -50,32 +50,38 @@ function love.update(dt)
                 table.insert(TirosGerais, possivelTiro)
             end
         end
-    end
 
-    Player:reloadInk(dt)
-
-    -- remove tiros fora da tela
-    for i, tiro in ipairs(TirosAmigaveis) do
-        tiro:move()
-        if tiro:isOffScreen() then
-            table.remove(TirosAmigaveis, i)
+        Player:reloadInk(dt)
+    
+        -- remove tiros fora da tela
+        for i, tiro in ipairs(TirosAmigaveis) do
+            tiro:move()
+            if tiro:isOffScreen() then
+                table.remove(TirosAmigaveis, i)
+            end
         end
-    end
-
-    -- move tiros gerais
-    for i, tiro in ipairs(TirosGerais) do
-        tiro:move()
-        if tiro:isOffScreen() then
-            table.remove(TirosGerais, i)
+    
+        -- move tiros gerais
+        for i, tiro in ipairs(TirosGerais) do
+            tiro:move()
+            if tiro:hitPlayer(Player.x, Player.y, (Player.size.width + Player.size.height) / 2) then
+                -- Tela:gameOver()
+            end
+            if tiro:isOffScreen() then
+                table.remove(TirosGerais, i)
+            end
         end
-    end
-
-    -- move tiros gerais
-    for i, tiro in ipairs(TirosTinta) do
-        tiro:move()
-        if tiro:isOffScreen() then
-            table.remove(TirosTinta, i)
+    
+        -- move tiros de tinta
+        for i, tiro in ipairs(TirosTinta) do
+            tiro:move()
+            if tiro:isOffScreen() then
+                table.remove(TirosTinta, i)
+            end
         end
+
+
+
     end
 end
 

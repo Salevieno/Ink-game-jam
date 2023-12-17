@@ -5,7 +5,7 @@ function TiroGeral:new(x, y, targetX, targetY)
 end
 
 function TiroGeral:hitPlayer(playerX, playerY, playerSize)
-    return TiroGeral.super.dist(playerX, playerY) <= playerSize
+    return TiroGeral.super.dist(self, playerX, playerY) <= playerSize
 end
 
 function TiroGeral:draw()

@@ -6,6 +6,7 @@ function Polvo:new()
     self.image = love.graphics.newImage("/assets/temp/squid.png")
     self.x = love.graphics.getWidth()/2 - self.image:getWidth()/2
     self.y = love.graphics.getHeight()/2 - self.image:getHeight()/2
+    self.size = {width = self.image:getWidth(), height = self.image:getHeight()}
     self.speed = 100
     self.distLimit = 100
     self.inkStorage = MaxInkStored
@@ -76,5 +77,5 @@ end
 
 function Polvo:draw()
     love.graphics.setColor(1, 1, 1)
-    love.graphics.draw(self.image, self.x, self.y, 0, 1, 1, self.image:getWidth()/2, self.image:getHeight()/2)
+    love.graphics.draw(self.image, self.x, self.y, 0, 1, 1, self.size.width/2, self.size.height/2)
 end
