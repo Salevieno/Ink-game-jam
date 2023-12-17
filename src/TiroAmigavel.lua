@@ -1,11 +1,17 @@
 TiroAmigavel = Object:extend()
 
-function TiroAmigavel:new()
-    self.pos = {x = 100 + math.random(600), y = 100 + math.random(400)}
+function TiroAmigavel:new(initX, initY, targetX, targetY)
+    self.pos = {x = initX, y = initY}
     self.size = 3
-    self.speed = {x = 3, y = 0}
+
+    local speedIntensity = TiroAmigavel.normalizeSpeed((targetX - initX), (targetY - initY))
+    local speedMax = 1
+    self.speed = {x = speedMax * (targetX - initX) / speedIntensity, y = speedMax * (targetY - initY) / speedIntensity}
 end
 
+function TiroAmigavel.normalizeSpeed(speedX, speedY)
+    return math.sqrt(speedX ^ 2 + speedY ^ 2)
+end
 
 function TiroAmigavel:createShot()
     

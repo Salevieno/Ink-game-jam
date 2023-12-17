@@ -10,8 +10,8 @@ function love.load()
     Tela = Tela()
     Player = Polvo()
     Inim = Inimigo(200, 400)
-    TirosAmigaveis = {TiroAmigavel(), TiroAmigavel(), TiroAmigavel(), TiroAmigavel(), TiroAmigavel(), TiroAmigavel(), TiroAmigavel(), TiroAmigavel(), TiroAmigavel()}
-    TirosGerais = {TiroGeral(), TiroGeral(), TiroGeral(), TiroGeral(), TiroGeral(), TiroGeral(), TiroGeral(), TiroGeral()}
+    TirosAmigaveis = {}
+    TirosGerais = {}
 end
 
 function love.update(dt)
@@ -19,11 +19,6 @@ function love.update(dt)
     if Tela.status == 'Jogo rodando' then
         Player:update(dt)
     end
-
-    -- move tiros amigáveis
-    -- for i = 1, #TirosAmigaveis do
-    --     TirosAmigaveis[i]:move()
-    -- end
 
     for i, tiro in ipairs(TirosAmigaveis) do
         tiro:move()
@@ -50,24 +45,32 @@ end
 
 function love.mousepressed(x, y, button, istouch, presses)
     -- ocorre quando o mouse é apertado
-    if button == 1 then
+    if button == 2 then
         Tela:incScreen()
+    end
+    if Tela.status == 'Jogo rodando' then
+        if button == 1 then
+            Player:shoot(x, y)
+        end
     end
 end
 
 function love.draw()
     -- desenha na tela
+    love.graphics.setColor(1, 1, 1)
     Tela:draw()
-    -- love.graphics.rectangle('fill', 100, 100, 10, 10)
+    
     if Tela.status == 'Jogo rodando' or Tela.status == 'Jogo pausado' then
         Player:draw()
         Inim:draw()
     end
-    love.graphics.setColor(0, 255, 0)
+
+    love.graphics.setColor(0, 1, 0)
     for i = 1, #TirosAmigaveis do
         TirosAmigaveis[i]:draw()
     end
-    love.graphics.setColor(255, 0, 0)
+
+    love.graphics.setColor(1, 0, 0)
     for i = 1, #TirosGerais do
         TirosGerais[i]:draw()
     end
