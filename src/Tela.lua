@@ -1,7 +1,7 @@
 Tela = Object:extend()
 
 function Tela:new()
-    self.imageInicial = love.graphics.newImage("/assets/temp/BG Main.jpg")
+    self.imageInicial = love.graphics.newImage("/assets/BG Main.png")
     self.status = "Tela inicial"
 end
 
