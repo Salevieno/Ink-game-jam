@@ -46,6 +46,7 @@ function Inimigo:update(dt, Player)
 
         if self.controled_timer <= 0 then
             self.controled = false
+            self.color_arr = {1, 1, 1}
         end
         
     end
