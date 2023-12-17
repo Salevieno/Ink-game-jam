@@ -6,9 +6,11 @@ function love.load()
     require "TiroAmigavel"
     require "TiroGeral"
     require "Botao"
+    require "inimigo"
 
     Tela = Tela()
     Player = Polvo()
+    Inim = Inimigo(200, 400)
     TirosAmigaveis = {}
     TirosGerais = {}
     Botoes = {Start = Botao(400, 300, "Começar jogo")}
@@ -80,6 +82,7 @@ function love.draw()
     love.graphics.setColor(1, 1, 1)
     if Tela.status == 'Jogo rodando' or Tela.status == 'Jogo pausado' then
         Player:draw()
+        Inim:draw()
     end
 
     love.graphics.setColor(0, 1, 0)
@@ -91,4 +94,5 @@ function love.draw()
     for i = 1, #TirosGerais do
         TirosGerais[i]:draw()
     end
+    
 end
