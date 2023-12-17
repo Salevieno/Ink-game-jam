@@ -83,6 +83,9 @@ function love.update(dt)
             if tiro:isOffScreen() then
                 table.remove(TirosTinta, i)
             end
+            if tiro:checkHitEnemy(Inimigos) then
+                table.remove(TirosTinta, i)
+            end
         end
 
         -- 

@@ -11,7 +11,7 @@ end
 function TiroAmigavel:checkHitEnemy(enemies)
     -- inimigo.size = 20
     for i, inimigo in ipairs(enemies) do
-        if self:hitEnemy(inimigo.x, inimigo.y, 20) then
+        if self:hitEnemy(inimigo.x, inimigo.y, 20) and inimigo.controlled == false then
             table.remove(enemies, i)
             return true
         end
