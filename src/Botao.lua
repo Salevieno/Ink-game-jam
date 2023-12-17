@@ -6,7 +6,7 @@ function Botao:new(initX, initY, name)
     self.pos = {x = initX, y = initY}
 end
 
-function Botao:isPressed(mouseX, mouseY)
+function Botao:isHovered(mouseX, mouseY)
     return self.pos.x <= mouseX and mouseX <= self.pos.x + self.size.x and self.pos.y <= mouseY and mouseY <= self.pos.y + self.size.y
 end
 

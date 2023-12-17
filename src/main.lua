@@ -26,6 +26,7 @@ end
 
 function love.update(dt)
     -- ocorrem o tempo todo (a cada frame). dt -> intervalo de tempo
+
     if Tela.status == 'Jogo rodando' then
         Current_dt = Current_dt + dt
     
@@ -97,6 +98,17 @@ function love.update(dt)
     end
 end
 
+function love.mousemoved(x, y)
+    if Botoes.Start ~= nil then
+        if Botoes.Start:isHovered(x, y) then
+            love.mouse.setCursor(love.mouse.getSystemCursor("hand"))
+            return
+        end
+    end
+    
+    love.mouse.setCursor()
+end
+
 function love.keypressed(key, scancode, isrepeat)
     -- ocorre quando uma tecla é pressionada
     if key == 'return' then
@@ -109,8 +121,7 @@ function love.mousepressed(x, y, button, istouch, presses)
 
     -- botão start
     if Botoes.Start ~= nil then
-        if Botoes.Start:isPressed(x, y) then
-            -- BotaoStart.act()
+        if Botoes.Start:isHovered(x, y) then
             Tela:incScreen()
             Botoes.Start = nil
         end

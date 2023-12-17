@@ -83,7 +83,7 @@ end
 
 function Polvo:drawHearts()
     for i = 1, self.hearts do
-        love.graphics.draw(self.heartImage, 20 * i, 30)
+        love.graphics.draw(self.heartImage, (self.heartImage:getWidth() + 3) * i, 30)
     end
 end
 
