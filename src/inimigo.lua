@@ -43,15 +43,16 @@ end
 
 function Inimigo.SpawnNewEnemy(Player)
     local image = love.graphics.newImage("/assets/temp/enemy 64.png")
-    local min_x, min_y = image:getWidth()/2, image:getHeight()/2
-    local max_x, max_y = love.graphics.getWidth() - image:getWidth()/2, love.graphics.getHeight() - image:getHeight()/2
+    local half_w, half_h = image:getWidth()/2, image:getHeight()/2
+    local min_x, min_y = half_w, half_h
+    local max_x, max_y = love.graphics.getWidth() - half_w, love.graphics.getHeight() - half_h
 
     math.randomseed(os.time())
     local x, y
 
     repeat
         x, y = math.random(min_x, max_x), math.random(min_y, max_y)
-    until Player:distanceToMid(x, y) > Player.distLimit
+    until Player:distanceToMid(x + half_w, y + half_h) > Player.distLimit + 5 and Player:distanceToMid(x - half_w, y - half_h) > Player.distLimit + 5
     
     return Inimigo(x, y)
 end
