@@ -70,7 +70,10 @@ function love.update(dt)
         for i, tiro in ipairs(TirosGerais) do
             tiro:move()
             if tiro:hitPlayer(Player.x, Player.y, (Player.size.width + Player.size.height) / 2) then
-                -- Tela:gameOver()
+                Player:decHeart()
+                if Player.heart == 0 then
+                    -- Tela:gameOver()
+                end
             end
 
             if tiro:isOffScreen() then
@@ -141,6 +144,7 @@ function love.draw()
     if Tela.status == 'Jogo rodando' or Tela.status == 'Jogo pausado' then
         Player:drawInkStorage()
         Player:draw()
+        Player:drawHearts()
         for i, v in ipairs(Inimigos) do
             v:draw()
         end

@@ -1,7 +1,7 @@
 TiroAmigavel = Tiro:extend()
 
 function TiroAmigavel:new(initX, initY, targetX, targetY)
-    TiroAmigavel.super.new(self, initX, initY, 3, 1, targetX, targetY)
+    TiroAmigavel.super.new(self, initX, initY, 3, 3, targetX, targetY)
 end
 
 function TiroAmigavel:hitEnemy(inimigoX, inimigoY, inimigoSize)

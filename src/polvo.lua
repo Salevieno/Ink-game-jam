@@ -4,6 +4,7 @@ function Polvo:new()
     AmountInkShot = 10
     MaxInkStored = 20
     self.image = love.graphics.newImage("/assets/temp/squid.png")
+    self.heartImage = love.graphics.newImage("/assets/heart.png")
     self.x = love.graphics.getWidth()/2 - self.image:getWidth()/2
     self.y = love.graphics.getHeight()/2 - self.image:getHeight()/2
     self.size = {width = self.image:getWidth(), height = self.image:getHeight()}
@@ -11,6 +12,11 @@ function Polvo:new()
     self.distLimit = 100
     self.inkStorage = MaxInkStored
     self.inkReloadTime = 0
+    self.hearts = 3
+end
+
+function Polvo:decHeart()
+    self.hearts = self.hearts - 1
 end
 
 function Polvo:hasInk()
@@ -73,6 +79,12 @@ function Polvo:drawInkStorage()
     love.graphics.rectangle('line', 740, 580, 20, -3 * MaxInkStored)
     love.graphics.setColor(1, 1, 0)
     love.graphics.rectangle('fill', 740, 580, 20, -3 * self.inkStorage)
+end
+
+function Polvo:drawHearts()
+    for i = 1, self.hearts do
+        love.graphics.draw(self.heartImage, 20 * i, 30)
+    end
 end
 
 function Polvo:draw()
