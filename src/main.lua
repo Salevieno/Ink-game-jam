@@ -10,6 +10,7 @@ function love.load()
     require "Botao"
     require "inimigo"
 
+
     Tela = Tela()
     Player = Polvo()
     Inimigos = {} 
@@ -18,7 +19,7 @@ function love.load()
     TirosTinta = {}
     Botoes = {Start = Botao(300, 250, "Começar jogo")}
     Cur_respawn_time = 2
-    Num_fish_respawn = 1
+    Num_fish_respawn = 2
     Current_dt = 0
     Score = 0
 end
@@ -38,7 +39,7 @@ function love.update(dt)
             end
 
             for i=1, Num_fish_respawn do
-                table.insert(Inimigos, Inimigo.SpawnNewEnemy(Player))
+                table.insert(Inimigos, Inimigo.SpawnNewEnemy(Player, i))
             end
 
         end
