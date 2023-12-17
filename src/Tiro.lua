@@ -9,6 +9,10 @@ function Tiro:new(initX, initY, size, speedMax, targetX, targetY)
     self.speed = {x = speedMax * (targetX - initX) / speedIntensity, y = speedMax * (targetY - initY) / speedIntensity}
 end
 
+function Tiro:dist(targetX, targetY)
+    return math.sqrt((targetX - self.pos.x) ^ 2 + (targetY - self.pos.y) ^ 2)
+end
+
 function Tiro.normalizeSpeed(speedX, speedY)
     return math.sqrt(speedX ^ 2 + speedY ^ 2)
 end

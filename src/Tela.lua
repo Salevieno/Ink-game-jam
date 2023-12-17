@@ -36,5 +36,11 @@ function Tela:draw()
     if self.status == "Tela inicial" then
         love.graphics.setColor(1, 1, 1)
         love.graphics.draw(self.imageInicial, 0, 0)
+    elseif self.status == "Jogo rodando" then
+
+    elseif self.status == "Jogo pausado" then
+        
+    elseif self.status == "Fim de jogo" then
+    
     end
 end
