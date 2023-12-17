@@ -34,6 +34,7 @@ end
 function Tela:draw()
     -- love.graphics.print(self.status, 100, 100)
     if self.status == "Tela inicial" then
+        love.graphics.setColor(1, 1, 1)
         love.graphics.draw(self.imageInicial, 0, 0)
     end
 end

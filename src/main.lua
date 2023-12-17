@@ -29,6 +29,8 @@ function love.update(dt)
         end
     end
 
+    Player:reloadInk(dt)
+
     -- remove tiros fora da tela
     for i, tiro in ipairs(TirosAmigaveis) do
         tiro:move()
@@ -63,9 +65,6 @@ end
 
 function love.mousepressed(x, y, button, istouch, presses)
     -- ocorre quando o mouse é apertado
-    if button == 2 then
-        Tela:incScreen()
-    end
 
     -- botão start
     if Botoes.Start ~= nil then
@@ -81,7 +80,7 @@ function love.mousepressed(x, y, button, istouch, presses)
         if button == 1 then
             Player:shoot(x, y)
         end
-        if button == 2 then
+        if button == 2 and Player:hasInk() then
             Player:shootInk(x, y)
         end
     end
@@ -89,16 +88,14 @@ end
 
 function love.draw()
     -- desenha na tela
-    love.graphics.setColor(1, 1, 1)
     Tela:draw()
 
-    love.graphics.setColor(1, 1, 1)
     for i, botao in pairs(Botoes) do
         botao:draw()
     end
 
-    love.graphics.setColor(1, 1, 1)
     if Tela.status == 'Jogo rodando' or Tela.status == 'Jogo pausado' then
+        Player:drawInkStorage()
         Player:draw()
         Inim:draw()
     end
