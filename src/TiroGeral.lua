@@ -1,7 +1,7 @@
 TiroGeral = Tiro:extend()
 
 function TiroGeral:new(x, y, targetX, targetY)
-    TiroAmigavel.super.new(self, x, y, 3, 1, targetX, targetY)
+    TiroGeral.super.new(self, x, y, 3, 1, targetX, targetY)
 end
 
 function TiroGeral:draw()
