@@ -1,6 +1,7 @@
 Tela = Object:extend()
 
 function Tela:new()
+    self.imageInicial = love.graphics.newImage("/assets/temp/BG Main.jpg")
     self.status = "Tela inicial"
 end
 
@@ -17,7 +18,7 @@ function Tela:gameOver()
 end
 
 function Tela:incScreen()
-    if (self.status == "Tela inicial") then
+    if self.status == "Tela inicial" then
         self:run()
     end
 end
@@ -31,5 +32,8 @@ function Tela:pauseResume()
 end
 
 function Tela:draw()
-    love.graphics.print(self.status, 100, 100)
+    -- love.graphics.print(self.status, 100, 100)
+    if self.status == "Tela inicial" then
+        love.graphics.draw(self.imageInicial, 0, 0)
+    end
 end
