@@ -67,12 +67,16 @@ function Inimigo:update(dt, Player)
 end
 
 function Inimigo:MoverCirculo()
-    local raio = 20
+    local raio = 75
     local angulo = math.fmod(self.moveTime, 6.28)*self.speed
     local new_x = (self.x0 + raio*math.sin(angulo))
     local new_y = (self.y0 + raio*math.cos(angulo))
-    self.x = new_x
-    self.y = new_y
+
+    local half_w, half_h = self.image:getWidth()/2, self.image:getHeight()/2
+    if Player:distanceToMid(new_x + half_w, new_y + half_h) > Player.distLimit + 25 then
+        self.x = new_x
+        self.y = new_y
+    end
 end
 
 function Inimigo:shoot(Player)
