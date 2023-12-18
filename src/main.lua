@@ -19,8 +19,8 @@ function love.load()
     TirosTinta = {}
     BotaoStart = Botao(280, 230, love.graphics.newImage("/assets/botaoStart.png"), love.graphics.newImage("/assets/botaoStartSelected.png"))
     BotaoRestart = Botao(280, 300, love.graphics.newImage("/assets/botaoRestart.png"), love.graphics.newImage("/assets/botaoRestartSelected.png"))
-    Cur_respawn_time = 2
-    Num_fish_respawn = 2
+    Cur_respawn_time = 3
+    Num_fish_respawn = 1
     Current_dt = 0
     Score = 0
 end
