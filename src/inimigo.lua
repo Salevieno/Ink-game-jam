@@ -6,8 +6,9 @@ function Inimigo:new(x, y)
     ScaleInimigo = 1 / 6
     self.x = x
     self.y = y
-    self.speed = 100
+    self.speed = 0
     self.image = love.graphics.newImage("/assets/peixe.png")
+    self.size = {ScaleInimigo * self.image:getWidth(), ScaleInimigo * self.image:getHeight()}
     self.y_limits = {self.y - 50, self.y + 100}
     self.dt_since_shoot = 0
     self.color_arr = {1, 1, 1}

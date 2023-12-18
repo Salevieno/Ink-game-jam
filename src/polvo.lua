@@ -2,15 +2,15 @@ Polvo = Object:extend()
 
 function Polvo:new()
     AmountInkShot = 10
-    MaxInkStored = 20
+    MaxInkStored = 30
     ScalePolvo = 0.2
     self.image = love.graphics.newImage("/assets/polvo.png")
     self.heartImage = love.graphics.newImage("/assets/heart.png")
-    self.x = love.graphics.getWidth()/2 - ScalePolvo * self.image:getWidth()/2
-    self.y = love.graphics.getHeight()/2 - ScalePolvo * self.image:getHeight()/2
+    self.x = love.graphics.getWidth()/2
+    self.y = love.graphics.getHeight()/2
     self.size = {width = ScalePolvo * self.image:getWidth(), height = ScalePolvo * self.image:getHeight()}
-    self.speed = 100
-    self.distLimit = 100
+    self.speed = 150
+    self.distLimit = 150
     self.inkStorage = MaxInkStored
     self.inkReloadTime = 0
     self.hearts = 3
@@ -88,7 +88,13 @@ function Polvo:drawInkStorage()
     love.graphics.rectangle('fill', 740, 580, 20, -3 * self.inkStorage)
 end
 
+function Polvo:drawSafeCircle()
+    love.graphics.setColor(0.3, 0.7, 0.9)
+    love.graphics.arc('line', love.graphics.getWidth()/2, love.graphics.getHeight()/2, self.distLimit, 0, 360)
+end
+
 function Polvo:drawHearts()
+    love.graphics.setColor(1, 1, 1)
     for i = 1, self.hearts do
         love.graphics.draw(self.heartImage, 10 + (0.05 * self.heartImage:getWidth() + 3) * (i - 1), 30, 0, 0.05, 0.05)
     end
@@ -96,5 +102,5 @@ end
 
 function Polvo:draw()
     love.graphics.setColor(1, 1, 1)
-    love.graphics.draw(self.image, self.x, self.y, 0, ScalePolvo, ScalePolvo, ScalePolvo * self.size.width/2, ScalePolvo * self.size.height/2)
+    love.graphics.draw(self.image, self.x - self.size.width / 2, self.y - self.size.height / 2, 0, ScalePolvo, ScalePolvo)
 end

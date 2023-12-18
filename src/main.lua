@@ -19,7 +19,7 @@ function love.load()
     TirosTinta = {}
     BotaoStart = Botao(280, 230, love.graphics.newImage("/assets/botaoStart.png"), love.graphics.newImage("/assets/botaoStartSelected.png"))
     BotaoRestart = Botao(280, 300, love.graphics.newImage("/assets/botaoRestart.png"), love.graphics.newImage("/assets/botaoRestartSelected.png"))
-    Cur_respawn_time = 3
+    Cur_respawn_time = 4
     Num_fish_respawn = 1
     Current_dt = 0
     Score = 0
@@ -33,10 +33,10 @@ function love.update(dt)
     
         if Current_dt >= Cur_respawn_time then
             Current_dt = 0
-            if Cur_respawn_time - 0.25 > 0 then
-                Cur_respawn_time = Cur_respawn_time - 0.25
+            if Cur_respawn_time - 0.125 > 0 then
+                Cur_respawn_time = Cur_respawn_time - 0.125
             else
-                Cur_respawn_time = 2
+                Cur_respawn_time = 3
                 Num_fish_respawn = Num_fish_respawn + 1
             end
 
@@ -71,7 +71,7 @@ function love.update(dt)
         -- move tiros gerais
         for i, tiro in ipairs(TirosGerais) do
             tiro:move()
-            if tiro:hitPlayer(Player.x, Player.y, (Player.size.width + Player.size.height) / 2) then
+            if tiro:hitPlayer(Player.x, Player.y, Player.size) then
                 Player:decHeart()
                 table.remove(TirosGerais, i)
             end
@@ -138,12 +138,13 @@ function love.mousepressed(x, y, button, istouch, presses)
     -- botão restart
     if Tela.status == "Fim de jogo" then
         if BotaoRestart:isHovered(x, y) then
-            Tela:inicial()
+            Score = 0
             Player:refillHearts()
             Inimigos = {}
             TirosAmigaveis = {}
             TirosGerais = {}
             TirosTinta = {}
+            Tela:inicial()
         end
     end
 
@@ -179,6 +180,7 @@ function love.draw()
     if Tela.status == 'Jogo rodando' or Tela.status == 'Jogo pausado' then
         Player:drawInkStorage()
         Player:draw()
+        Player:drawSafeCircle()
         Player:drawHearts()
         for i, v in ipairs(Inimigos) do
             v:draw()
