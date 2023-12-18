@@ -1,15 +1,18 @@
 Inimigo = Object:extend()
 
 function Inimigo:new(x, y)
+    self.x0 = x
+    self.y0 = y
     self.x = x
     self.y = y
-    self.speed = 100
+    self.speed = 10
     self.image = love.graphics.newImage("/assets/temp/enemy 64.png")
     self.y_limits = {self.y - 50, self.y + 100}
     self.dt_since_shoot = 0
     self.color_arr = {1, 1, 1}
     self.controled = false
     self.controled_timer = 2
+    self.moveTime = 0
 end
 
 function Inimigo:draw()
@@ -23,23 +26,24 @@ function Inimigo:inkHit(color_arr, controled_timer)
     self.controled_timer = controled_timer
 end
 
-function Inimigo:update(dt, Player)
+function Inimigo:update(dt, Player) 
     self.dt_since_shoot = self.dt_since_shoot + dt
-    self.y = self.y + self.speed*dt
+    local new_x = self.x
+    local new_y = self.y
 
     if self.controled then
 
         if love.keyboard.isDown("w") then
-            self.y = self.y - (Player.speed/2)*dt
+            new_y = self.y - (Player.speed/2)*dt
         end
         if love.keyboard.isDown("s") then
-            self.y = self.y + (Player.speed/2)*dt
+            new_y = self.y + (Player.speed/2)*dt
         end
         if love.keyboard.isDown("d") then
-            self.x = self.x + (Player.speed/2)*dt
+            new_x = self.x + (Player.speed/2)*dt
         end
         if love.keyboard.isDown("a") then
-            self.x = self.x - (Player.speed/2)*dt
+            new_x = self.x - (Player.speed/2)*dt
         end
 
         self.controled_timer = self.controled_timer - dt
@@ -51,11 +55,8 @@ function Inimigo:update(dt, Player)
         
     end
 
-    if self.y < self.y_limits[1] then
-        self.speed = 100
-    elseif self.y > self.y_limits[2] then
-        self.speed = -100
-    end
+    self:MoverCirculo()
+    self.moveTime = self.moveTime + dt
 
     if self.dt_since_shoot >= 2 then
         self.dt_since_shoot = 0
@@ -63,6 +64,15 @@ function Inimigo:update(dt, Player)
     end
 
     return nil
+end
+
+function Inimigo:MoverCirculo()
+    local raio = 20
+    local angulo = math.fmod(self.moveTime, 6.28)*self.speed
+    local new_x = (self.x0 + raio*math.sin(angulo))
+    local new_y = (self.y0 + raio*math.cos(angulo))
+    self.x = new_x
+    self.y = new_y
 end
 
 function Inimigo:shoot(Player)
