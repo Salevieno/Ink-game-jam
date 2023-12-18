@@ -1,10 +1,11 @@
 Inimigo = Object:extend()
 
 function Inimigo:new(x, y)
+    ScaleInimigo = 1 / 6
     self.x = x
     self.y = y
     self.speed = 100
-    self.image = love.graphics.newImage("/assets/temp/enemy 64.png")
+    self.image = love.graphics.newImage("/assets/peixe.png")
     self.y_limits = {self.y - 50, self.y + 100}
     self.dt_since_shoot = 0
     self.color_arr = {1, 1, 1}
@@ -14,7 +15,7 @@ end
 
 function Inimigo:draw()
     love.graphics.setColor(self.color_arr[1], self.color_arr[2], self.color_arr[3])
-    love.graphics.draw(self.image, self.x, self.y, 0, 1, 1, self.image:getWidth()/2, self.image:getHeight()/2)
+    love.graphics.draw(self.image, self.x, self.y, 0, ScaleInimigo, ScaleInimigo, self.image:getWidth()/2, self.image:getHeight()/2)
 end
 
 function Inimigo:inkHit(color_arr, controled_timer)

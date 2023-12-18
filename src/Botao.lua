@@ -1,9 +1,20 @@
 Botao = Object:extend()
 
-function Botao:new(initX, initY, name)
-    self.name = name
-    self.size = {x = 200, y = 50}
+function Botao:new(initX, initY, image, selectedImage)
+    Scale = 0.4
+    self.size = {x = Scale * image:getWidth(), y = Scale * image:getHeight()}
     self.pos = {x = initX, y = initY}
+    self.image = image
+    self.selectedImage = selectedImage
+    self.hovered = false
+end
+
+function Botao:checkHover(mouseX, mouseY)
+    if self.pos.x <= mouseX and mouseX <= self.pos.x + self.size.x and self.pos.y <= mouseY and mouseY <= self.pos.y + self.size.y then
+        self.hovered = true
+    else
+        self.hovered = false
+    end
 end
 
 function Botao:isHovered(mouseX, mouseY)
@@ -12,7 +23,9 @@ end
 
 function Botao:draw()
     love.graphics.setColor(1, 1, 1)
-    love.graphics.rectangle('fill', self.pos.x, self.pos.y, self.size.x, self.size.y)
-    love.graphics.setColor(0, 0, 0)
-    love.graphics.print(self.name, self.pos.x, self.pos.y)
+    if self.hovered then
+        love.graphics.draw(self.selectedImage, self.pos.x, self.pos.y, 0, Scale, Scale)
+    else
+        love.graphics.draw(self.image, self.pos.x, self.pos.y, 0, Scale, Scale)
+    end
 end

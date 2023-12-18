@@ -17,7 +17,8 @@ function love.load()
     TirosAmigaveis = {}
     TirosGerais = {}
     TirosTinta = {}
-    Botoes = {Start = Botao(300, 250, "Começar jogo")}
+    BotaoStart = Botao(280, 230, love.graphics.newImage("/assets/botaoStart.png"), love.graphics.newImage("/assets/botaoStartSelected.png"))
+    BotaoRestart = Botao(280, 300, love.graphics.newImage("/assets/botaoRestart.png"), love.graphics.newImage("/assets/botaoRestartSelected.png"))
     Cur_respawn_time = 2
     Num_fish_respawn = 2
     Current_dt = 0
@@ -72,9 +73,7 @@ function love.update(dt)
             tiro:move()
             if tiro:hitPlayer(Player.x, Player.y, (Player.size.width + Player.size.height) / 2) then
                 Player:decHeart()
-                if Player.heart == 0 then
-                    -- Tela:gameOver()
-                end
+                table.remove(TirosGerais, i)
             end
 
             if tiro:isOffScreen() then
@@ -92,15 +91,25 @@ function love.update(dt)
                 table.remove(TirosTinta, i)
             end
         end
+    end
 
-        -- 
-
+    if Player.hearts == 0 then
+        Tela:gameOver()
     end
 end
 
 function love.mousemoved(x, y)
-    if Botoes.Start ~= nil then
-        if Botoes.Start:isHovered(x, y) then
+    if Tela.status == "Tela inicial" then
+        BotaoStart:checkHover(x, y)
+        if BotaoStart:isHovered(x, y) then
+            love.mouse.setCursor(love.mouse.getSystemCursor("hand"))
+            return
+        end
+    end
+
+    if Tela.status == "Fim de jogo" then
+        BotaoRestart:checkHover(x, y)
+        if BotaoRestart:isHovered(x, y) then
             love.mouse.setCursor(love.mouse.getSystemCursor("hand"))
             return
         end
@@ -120,10 +129,21 @@ function love.mousepressed(x, y, button, istouch, presses)
     -- ocorre quando o mouse é apertado
 
     -- botão start
-    if Botoes.Start ~= nil then
-        if Botoes.Start:isHovered(x, y) then
-            Tela:incScreen()
-            Botoes.Start = nil
+    if Tela.status == "Tela inicial" then
+        if BotaoStart:isHovered(x, y) then
+            Tela:run()
+        end
+    end
+
+    -- botão restart
+    if Tela.status == "Fim de jogo" then
+        if BotaoRestart:isHovered(x, y) then
+            Tela:inicial()
+            Player:refillHearts()
+            Inimigos = {}
+            TirosAmigaveis = {}
+            TirosGerais = {}
+            TirosTinta = {}
         end
     end
 
@@ -146,10 +166,14 @@ end
 function love.draw()
     -- desenha na tela
     Tela:draw()
-    Tela:drawScore()
 
-    for i, botao in pairs(Botoes) do
-        botao:draw()
+    if Tela.status == "Tela inicial" then
+        BotaoStart:draw()
+    end
+
+    -- botão restart
+    if Tela.status == "Fim de jogo" then
+        BotaoRestart:draw()
     end
 
     if Tela.status == 'Jogo rodando' or Tela.status == 'Jogo pausado' then
@@ -159,17 +183,17 @@ function love.draw()
         for i, v in ipairs(Inimigos) do
             v:draw()
         end
-    end
 
-    for i = 1, #TirosAmigaveis do
-        TirosAmigaveis[i]:draw()
-    end
-
-    for i = 1, #TirosGerais do
-        TirosGerais[i]:draw()
-    end
-
-    for i = 1, #TirosTinta do
-        TirosTinta[i]:draw()
+        for i = 1, #TirosAmigaveis do
+            TirosAmigaveis[i]:draw()
+        end
+    
+        for i = 1, #TirosGerais do
+            TirosGerais[i]:draw()
+        end
+    
+        for i = 1, #TirosTinta do
+            TirosTinta[i]:draw()
+        end
     end
 end
