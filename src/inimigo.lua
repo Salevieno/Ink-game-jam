@@ -6,7 +6,7 @@ function Inimigo:new(x, y)
     ScaleInimigo = 1 / 6
     self.x = x
     self.y = y
-    self.speed = 0
+    self.speed = 5
     self.image = love.graphics.newImage("/assets/peixe.png")
     self.size = {ScaleInimigo * self.image:getWidth(), ScaleInimigo * self.image:getHeight()}
     self.y_limits = {self.y - 50, self.y + 100}
@@ -36,16 +36,16 @@ function Inimigo:update(dt, Player)
     if self.controled then
 
         if love.keyboard.isDown("w") then
-            new_y = self.y - (Player.speed/2)*dt
+            self.y0 = self.y0 - (Player.speed/2)*dt
         end
         if love.keyboard.isDown("s") then
-            new_y = self.y + (Player.speed/2)*dt
+            self.y0 = self.y0 + (Player.speed/2)*dt
         end
         if love.keyboard.isDown("d") then
-            new_x = self.x + (Player.speed/2)*dt
+            self.x0 = self.x0 + (Player.speed/2)*dt
         end
         if love.keyboard.isDown("a") then
-            new_x = self.x - (Player.speed/2)*dt
+            self.x0 = self.x0 - (Player.speed/2)*dt
         end
 
         self.controled_timer = self.controled_timer - dt
@@ -60,7 +60,7 @@ function Inimigo:update(dt, Player)
     self:MoverCirculo()
     self.moveTime = self.moveTime + dt
 
-    if self.dt_since_shoot >= 2 then
+    if self.dt_since_shoot >= 4 then
         self.dt_since_shoot = 0
         return self:shoot(Player)
     end
@@ -69,13 +69,17 @@ function Inimigo:update(dt, Player)
 end
 
 function Inimigo:MoverCirculo()
-    local raio = 75
+    local raio = 50
     local angulo = math.fmod(self.moveTime, 6.28)*self.speed
     local new_x = (self.x0 + raio*math.sin(angulo))
     local new_y = (self.y0 + raio*math.cos(angulo))
 
     local half_w, half_h = self.image:getWidth()/2, self.image:getHeight()/2
-    if Player:distanceToMid(new_x + half_w, new_y + half_h) > Player.distLimit + 25 then
+    if Player:distanceToMid(new_x + half_w, new_y + half_h) > Player.distLimit + 25 
+    and new_x + self.size[1] <= love.graphics.getWidth() 
+    and new_y + self.size[2] <= love.graphics.getHeight()
+    and new_x - self.size[1] >= 0 
+    and new_y - self.size[2] >= 0 then
         self.x = new_x
         self.y = new_y
     end

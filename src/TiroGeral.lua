@@ -1,7 +1,7 @@
 TiroGeral = Tiro:extend()
 
 function TiroGeral:new(x, y, targetX, targetY)
-    TiroGeral.super.new(self, x, y, 3, 3, targetX, targetY)
+    TiroGeral.super.new(self, x, y, 3, 2, targetX, targetY)
 end
 
 function TiroGeral:hitPlayer(playerX, playerY, playerSize)
